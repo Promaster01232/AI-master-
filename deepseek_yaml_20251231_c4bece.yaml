@@ -1,0 +1,93 @@
+# Document processing rules
+processing:
+  chunk_size: 1000
+  chunk_overlap: 200
+  max_chunks_per_document: 1000
+  
+  # Supported file types
+  supported_types:
+    pdf:
+      enabled: true
+      extract_images: false
+      extract_tables: true
+    txt:
+      enabled: true
+      encoding: "utf-8"
+    docx:
+      enabled: true
+    md:
+      enabled: true
+    html:
+      enabled: true
+      extract_links: true
+  
+  # Text cleaning
+  cleaning:
+    remove_extra_whitespace: true
+    remove_header_footer: true
+    remove_references: true
+    min_sentence_length: 20
+    max_sentence_length: 1000
+  
+  # Language detection
+  languages:
+    - en
+    - hi
+    - es
+    - fr
+    - de
+    - zh
+    - ja
+    - ko
+  
+  # Metadata extraction
+  metadata:
+    extract_title: true
+    extract_author: true
+    extract_date: true
+    extract_keywords: true
+    max_keywords: 10
+
+# Vector database settings
+vector:
+  embedding_model: "nomic-embed-text"
+  collection_name: "documents"
+  similarity_metric: "cosine"
+  indexing:
+    hnsw:
+      m: 16
+      ef_construction: 200
+  
+  # Search settings
+  search:
+    default_limit: 5
+    max_limit: 20
+    score_threshold: 0.7
+
+# Storage
+storage:
+  raw_documents: "./documents/raw"
+  processed_documents: "./documents/processed"
+  chunks_directory: "./documents/processed/chunks"
+  embeddings_directory: "./documents/processed/embeddings"
+  
+  retention:
+    keep_processed: true
+    backup_raw: true
+    max_age_days: 365
+    cleanup_interval_hours: 24
+
+# Security
+security:
+  max_file_size_mb: 100
+  allowed_extensions:
+    - .pdf
+    - .txt
+    - .docx
+    - .doc
+    - .md
+    - .html
+    - .htm
+  
+  virus_scan: false  # Enable if antivirus installed
+  sanitize_html: true

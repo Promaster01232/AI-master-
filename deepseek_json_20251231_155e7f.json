@@ -1,0 +1,40 @@
+{
+  "models": {
+    "llama3.2:3b": {
+      "name": "Meta Llama 3.2 3B",
+      "description": "Lightweight model for fast inference",
+      "size": "3B",
+      "context": 8192,
+      "languages": ["en", "es", "fr", "de"],
+      "path": "./llama/llama-3.2-3b",
+      "recommended": false
+    },
+    "qwen2.5:7b": {
+      "name": "Qwen 2.5 7B",
+      "description": "Best for multilingual support including Hindi",
+      "size": "7B",
+      "context": 32768,
+      "languages": ["en", "hi", "zh", "ar", "fr", "es", "ru"],
+      "path": "./qwen/qwen2.5-7b",
+      "recommended": true
+    },
+    "mistral:7b": {
+      "name": "Mistral 7B",
+      "description": "High quality English model",
+      "size": "7B",
+      "context": 32768,
+      "languages": ["en", "fr", "es", "de", "it"],
+      "path": "./mistral/mistral-7b",
+      "recommended": true
+    },
+    "embedding:nomic": {
+      "name": "Nomic Embed Text",
+      "description": "Embedding model for RAG",
+      "type": "embedding",
+      "dimensions": 768,
+      "path": "./embeddings/nomic-embed-text"
+    }
+  },
+  "default_model": "qwen2.5:7b",
+  "auto_download": true
+}

@@ -1,0 +1,116 @@
+# Training Configuration
+training:
+  # Base model
+  base_model: "qwen2.5:7b"
+  model_type: "causal"
+  
+  # Dataset
+  dataset:
+    path: "./training/datasets"
+    train_split: 0.8
+    val_split: 0.1
+    test_split: 0.1
+    shuffle: true
+    seed: 42
+  
+  # Training parameters
+  parameters:
+    epochs: 10
+    batch_size: 4
+    gradient_accumulation_steps: 4
+    learning_rate: 2e-5
+    warmup_steps: 100
+    weight_decay: 0.01
+    
+    # Optimizer
+    optimizer: "adamw"
+    beta1: 0.9
+    beta2: 0.999
+    epsilon: 1e-8
+    
+    # Scheduler
+    scheduler: "cosine"
+    num_cycles: 0.5
+  
+  # LoRA configuration (for efficient fine-tuning)
+  lora:
+    enabled: true
+    r: 8
+    alpha: 16
+    dropout: 0.1
+    target_modules: ["q_proj", "v_proj"]
+  
+  # Quantization (for memory efficiency)
+  quantization:
+    enabled: true
+    bits: 4
+    group_size: 128
+    desc_act: false
+  
+  # Checkpointing
+  checkpoint:
+    save_strategy: "epoch"
+    save_steps: 500
+    save_total_limit: 3
+    load_best_model_at_end: true
+    metric_for_best_model: "eval_loss"
+  
+  # Evaluation
+  evaluation:
+    eval_strategy: "epoch"
+    eval_steps: 500
+    per_device_eval_batch_size: 4
+  
+  # Logging
+  logging:
+    strategy: "steps"
+    steps: 100
+    report_to: "tensorboard"
+    logging_dir: "./training/logs/tensorboard"
+  
+  # Output
+  output:
+    dir: "./training/output"
+    save_format: "safetensors"
+    push_to_hub: false
+    hub_model_id: ""
+  
+  # Hardware
+  hardware:
+    device: "auto"  # auto, cpu, cuda
+    fp16: true
+    bf16: false
+    gradient_checkpointing: true
+    use_cpu: false
+  
+  # Early stopping
+  early_stopping:
+    enabled: true
+    patience: 3
+    threshold: 0.001
+
+# Dataset format
+dataset_format:
+  conversation:
+    - role: "user"
+      content: "What is AI?"
+    - role: "assistant"
+      content: "AI stands for Artificial Intelligence..."
+  
+  instruction:
+    instruction: "Explain quantum computing"
+    response: "Quantum computing uses quantum bits..."
+  
+  qa:
+    question: "What is the capital of France?"
+    answer: "Paris"
+
+# Augmentation (optional)
+augmentation:
+  enabled: false
+  techniques:
+    - synonym_replacement
+    - back_translation
+    - random_insertion
+    - random_deletion
+  augmentation_factor: 2.0

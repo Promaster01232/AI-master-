@@ -1,0 +1,10 @@
+# Minimal frontend Dockerfile placeholder
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install || true
+COPY . .
+RUN npm run build || true
+
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
